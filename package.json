@@ -1,17 +1,18 @@
 {
-  "name": "bitfinex",
+  "name": "gemini-exchange-api",
   "version": "1.0.3",
   "gypfile": true,
   "scripts": {
     "start": "node test.js"
   },
-  "description": "node.js wrapper for bitfinex cryptocurrency exchange",
-  "main": "lib/bitfinex.js",
+  "description": "node.js wrapper for gemini cryptocurrency exchange, based on git://github.com/gferrin/bitfinex.git",
+  "main": "lib/gemini.js",
   "scripts": {
      "build": "coffee --bare --compile *.coffee",
      "prepublish": "coffee --output lib --compile src"
   },
   "keywords": [
+	"gemini",
     "bitfinex",
     "litecoin",
     "bitcoin",
@@ -21,12 +22,11 @@
   "author": {
     "name": "Gabriel Ferrin",
     "email": "garf11235813@gmail.com"},
-  "contributors": "Nick Addison",
+  "contributors": "Nick Addison, Leon Keating",
   "dependencies": {
     "request": "~2.30.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/gferrin/bitfinex.git"
-  }
+    "url": "git://github.com/keatingl777/bitfinex
 }

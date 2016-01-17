@@ -79,22 +79,6 @@ module.exports = class Bitfinex
 	########## PUBLIC REQUESTS ##########
 	#####################################                            
 
-	ticker: (symbol, cb) ->
-
-		@make_public_request('pubticker/' + symbol, cb)
-
-	today: (symbol, cb) ->
-
-		@make_public_request('today/' + symbol, cb)     
-
-	candles: (symbol, cb) ->
-
-		@make_public_request('candles/' + symbol, cb)   
-
-	lendbook: (currency, cb) ->
-
-		@make_public_request('lendbook/' + currency, cb)    
-
 	orderbook: (symbol, options, cb) ->
 
 		index = 0
@@ -121,10 +105,6 @@ module.exports = class Bitfinex
 
 		@make_public_request('trades/' + symbol, cb)
 
-	lends: (currency, cb) ->
-
-		@make_public_request('lends/' + currency, cb)       
-
 	get_symbols: (cb) ->
 
 		@make_public_request('symbols', cb)
@@ -137,11 +117,7 @@ module.exports = class Bitfinex
 	# ###### AUTHENTICATED REQUESTS #######
 	# #####################################   
 
-	new_order: (symbol, amount, price, exchange, side, type, is_hidden, cb) ->
-
-		if typeof is_hidden is 'function'
-			cb = is_hidden
-			is_hidden = false
+	new_order: (symbol, amount, price, exchange, side, type, cb) ->
 
 		params = 
 			symbol: symbol
@@ -150,23 +126,8 @@ module.exports = class Bitfinex
 			exchange: exchange
 			side: side
 			type: type
-
-		if is_hidden
-			params['is_hidden'] = true
 
 		@make_request('order/new', params, cb)  
-
-	multiple_new_orders: (symbol, amount, price, exchange, side, type, cb) ->
-
-		params = 
-			symbol: symbol
-			amount: amount
-			price: price
-			exchange: exchange
-			side: side
-			type: type
-
-		@make_request('order/new/multi', params, cb)  
 
 	cancel_order: (order_id, cb) ->
 
@@ -179,27 +140,6 @@ module.exports = class Bitfinex
 
 		@make_request('order/cancel/all', {}, cb)
 
-	cancel_multiple_orders: (order_ids, cb) ->
-
-		params = 
-			order_ids: order_ids.map( (id) ->
-				return parseInt(id) )
-
-		@make_request('order/cancel/multi', params, cb)
-
-	replace_order: (order_id, symbol, amount, price, exchange, side, type, cb) ->
-
-		params = 
-			order_id: parseInt(order_id)
-			symbol: symbol
-			amount: amount
-			price: price
-			exchange: exchange
-			side: side
-			type: type
-
-		@make_request('order/cancel/replace', params, cb)  
-
 	order_status: (order_id, cb) ->
 
 		params = 
@@ -209,106 +149,11 @@ module.exports = class Bitfinex
 
 	active_orders: (cb) ->
 
-		@make_request('orders', {}, cb)  
-
-	active_positions: (cb) ->
-
-		@make_request('positions', {}, cb)
-
-	movements: (currency, options, cb) ->
-
-		params =
-			currency: currency
-
-		if typeof options is 'function'
-			cb = options
-		else
-			try
-				for option, value of options
-					params[option] = value
-			catch err
-				return cb(err)
-
-		@make_request('history/movements', params, cb)
-
-	past_trades: (symbol, options, cb) ->
-
-		params =
-			symbol: symbol
-
-		if typeof options is 'function'
-			cb = options
-		else
-			try
-				for option, value of options
-					params[option] = value
-			catch err
-				return cb(err)
-
-		@make_request('mytrades', params, cb)
-
-	new_deposit: (currency, method, wallet_name, cb) ->
-
-		params = 
-			currency: currency
-			method: method
-			wallet_name: wallet_name
-
-		@make_request('deposit/new', params, cb)  
-
-	new_offer: (currency, amount, rate, period, direction, insurance_option, cb) ->
-
-		params = 
-			currency: currency
-			amount: amount
-			rate: rate
-			period: period
-			direction: direction
-			insurance_option: insurance_option
-
-		@make_request('offer/new', params, cb)  
-
-	cancel_offer: (offer_id, cb) ->
-
-		params = 
-			offer_id: offer_id
-
-		@make_request('offer/cancel', params, cb) 
-
-	offer_status: (order_id, cb) ->
-
-		params = 
-			order_id: order_id
-
-		@make_request('offer/status', params, cb) 
-
-	active_offers: (cb) ->
-
-		@make_request('offers', {}, cb) 
-
-	active_credits: (cb) ->
-
-		@make_request('credits', {}, cb) 
-
-	wallet_balances: (cb) ->
-
-		@make_request('balances', {}, cb)
-
-	taken_swaps: (cb) ->
-
-		@make_request('taken_swaps', {}, cb)
-
-	close_swap: (swap_id, cb) ->
-
-		@make_request('swap/close', {swap_id: swap_id}, cb)
+		@make_request('orders', {}, cb) 
 
 	account_infos: (cb) ->
 
 		@make_request('account_infos', {}, cb)
-
-	margin_infos: (cb) ->
-
-		@make_request('margin_infos', {}, cb)
 
 	###
 		POST /v1/withdraw
