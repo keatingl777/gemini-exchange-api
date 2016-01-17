@@ -1,4 +1,4 @@
-This is a node.js wrapper for gemini cryptocurrency exchange, based on git://github.com/gferrin/bitfinex.git [API]https://docs.gemini.com/
+This is a node.js wrapper for gemini cryptocurrency exchange, based on https://github.com/gferrin/bitfinex.git [API]https://docs.gemini.com/
 
 ### Install
 
