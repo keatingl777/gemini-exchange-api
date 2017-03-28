@@ -10,7 +10,7 @@ module.exports = class Bitfinex
 
 	constructor: (key, secret, nonceGenerator) ->
 
-		@url = "https://api.bitfinex.com"
+		@url = "https://api.gemini.com"
 		@version = 'v1'
 		@key = key
 		@secret = secret
